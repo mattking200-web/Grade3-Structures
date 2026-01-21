@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strong & Stable Structures! - Grade 3 Science</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Bangers&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #7C3AED;
+            --secondary: #EC4899;
+            --accent: #10B981;
+            --orange: #F59E0B;
+            --blue: #3B82F6;
+            --cyan: #06B6D4;
+            --red: #EF4444;
+            --bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-bg: #FFFFFF;
+            --text: #1F2937;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: #1a1a2e;
+            color: var(--text);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(180deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .particle {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float-particle 15s infinite;
+            z-index: -1;
+        }
+
+        @keyframes float-particle {
+            0% { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px) scale(1); opacity: 0; }
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 20px,
+                rgba(255,255,255,0.03) 20px,
+                rgba(255,255,255,0.03) 40px
+            );
+            animation: slide 30s linear infinite;
+        }
+
+        @keyframes slide {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        h1 {
+            font-family: 'Bangers', cursive;
+            font-size: 4rem;
+            color: white;
+            text-shadow: 
+                3px 3px 0 #EC4899,
+                6px 6px 0 #7C3AED,
+                9px 9px 20px rgba(0,0,0,0.5);
+            margin-bottom: 0.5rem;
+            position: relative;
+            letter-spacing: 3px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 3px 3px 0 #EC4899, 6px 6px 0 #7C3AED, 9px 9px 20px rgba(0,0,0,0.5); }
+            to { text-shadow: 3px 3px 0 #EC4899, 6px 6px 0 #7C3AED, 9px 9px 30px rgba(236,72,153,0.8), 0 0 40px rgba(124,58,237,0.6); }
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            color: white;
+            font-weight: 700;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        nav {
+            background: rgba(30, 30, 60, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid #7C3AED;
+            transition: all 0.3s;
+        }
+
+        nav.hidden {
+            display: none;
+        }
+
+        .back-button {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 101;
+            background: linear-gradient(135deg, #7C3AED, #EC4899);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.4);
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(124, 58, 237, 0.6);
+        }
+
+        .back-button.show {
+            display: block;
+            animation: slideInLeft 0.5s;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .bottom-back-button {
+            display: none;
+            margin: 3rem auto;
+            padding: 1.5rem 3rem;
+            font-size: 1.3rem;
+            position: relative;
+        }
+
+        .bottom-back-button.show {
+            display: block;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(124,58,237,0.4);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(124,58,237,0.6);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #EC4899 0%, #F59E0B 100%);
+            box-shadow: 0 6px 25px rgba(236,72,153,0.6);
+            transform: scale(1.05);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .page {
+            display: none;
+            animation: fadeInUp 0.6s;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            border: 3px solid;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #EC4899, #F59E0B);
+        }
+
+        .card h2 {
+            font-family: 'Bangers', cursive;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #EC4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        .card h3 {
+            font-size: 2rem;
+            margin: 2rem 0 1rem;
+            color: #7C3AED;
+            font-weight: 700;
+        }
+
+        .card p, .card li {
+            font-size: 1.2rem;
+            line-height: 1.9;
+            margin-bottom: 1rem;
+        }
+
+        .home-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .topic-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 4px solid;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(124,58,237,0.1), rgba(236,72,153,0.1));
+            transform: translateY(100%);
+            transition: transform 0.4s;
+        }
+
+        .topic-card:hover::before {
+            transform: translateY(0);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-15px) rotate(-3deg);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+        }
+
+        .topic-card .icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .topic-card h3 {
+            color: var(--text);
+            margin: 1rem 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .topic-card p {
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+
+            .subtitle {
+                font-size: 1.3rem;
+            }
+
+            .nav-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 2rem;
+            }
+
+            .card h2 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="starfield" id="starfield"></div>
+    
+    <header>
+        <h1>🏗️ STRONG & STABLE STRUCTURES! 🏗️</h1>
+        <p class="subtitle">Build Your Knowledge of Amazing Structures!</p>
+    </header>
+
+    <nav>
+        <div class="nav-grid">
+            <button class="nav-btn active" onclick="showPage('home', event)">🏠 Home</button>
+            <button class="nav-btn" onclick="showPage('d11', event)">D1.1 - Effects on Society</button>
+            <button class="nav-btn" onclick="showPage('d12', event)">D1.2 - Animal Structures</button>
+            <button class="nav-btn" onclick="showPage('d21', event)">D2.1 - What is a Structure?</button>
+            <button class="nav-btn" onclick="showPage('d22', event)">D2.2 - Form & Function</button>
+            <button class="nav-btn" onclick="showPage('d23', event)">D2.3 - Strength</button>
+        </div>
+    </nav>
+
+    <button class="back-button" id="backButton" onclick="showPage('home', event)">
+        ← Back to Lessons
+    </button>
+
+    <div class="container">
+        <div id="home" class="page active">
+            <div class="card" style="border-color: #7C3AED;">
+                <h2>Welcome, Structure Engineers! 🏗️</h2>
+                <p>Get ready for an amazing journey into the world of STRUCTURES! Structures are all around us - from bridges and buildings to bird nests and spider webs. They hold loads, keep their shape, and serve important functions!</p>
+                <p>Click on any topic below to start your adventure. Each lesson has awesome activities and a quiz to test your structure knowledge!</p>
+            </div>
+
+            <div class="home-grid">
+                <div class="topic-card" style="border-color: #7C3AED;" onclick="showPage('d11', event)">
+                    <div class="icon">🌍</div>
+                    <h3>Effects on Society</h3>
+                    <p>How structures impact our world!</p>
+                </div>
+                <div class="topic-card" style="border-color: #EC4899;" onclick="showPage('d12', event)">
+                    <div class="icon">🦫</div>
+                    <h3>Animal Structures</h3>
+                    <p>Amazing structures built by animals!</p>
+                </div>
+                <div class="topic-card" style="border-color: #F59E0B;" onclick="showPage('d21', event)">
+                    <div class="icon">🏛️</div>
+                    <h3>What is a Structure?</h3>
+                    <p>Learn the basics of structures!</p>
+                </div>
+                <div class="topic-card" style="border-color: #10B981;" onclick="showPage('d22', event)">
+                    <div class="icon">⚙️</div>
+                    <h3>Form & Function</h3>
+                    <p>Shape matches purpose!</p>
+                </div>
+                <div class="topic-card" style="border-color: #3B82F6;" onclick="showPage('d23', event)">
+                    <div class="icon">💪</div>
+                    <h3>Strength</h3>
+                    <p>Supporting heavy loads!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="d11" class="page">
+            <div class="card" style="border-color: #7C3AED;">
+                <h2>D1.1 - Effects on Society & Environment 🌍</h2>
+                <p>Coming soon! This lesson will explore how structures impact society and the environment.</p>
+                <div style="text-align: center; margin-top: 3rem;">
+                    <button class="back-button bottom-back-button show" onclick="showPage('home', event)">
+                        ← Back to Lessons
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="d12" class="page">
+            <div class="card" style="border-color: #EC4899;">
+                <h2>D1.2 - Animal Structures 🦫</h2>
+                <p>Coming soon! This lesson will explore amazing structures built by animals.</p>
+                <div style="text-align: center; margin-top: 3rem;">
+                    <button class="back-button bottom-back-button show" onclick="showPage('home', event)">
+                        ← Back to Lessons
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="d21" class="page">
+            <div class="card" style="border-color: #F59E0B;">
+                <h2>D2.1 - What is a Structure? 🏛️</h2>
+                <p>Coming soon! This lesson will teach the basics of structures.</p>
+                <div style="text-align: center; margin-top: 3rem;">
+                    <button class="back-button bottom-back-button show" onclick="showPage('home', event)">
+                        ← Back to Lessons
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="d22" class="page">
+            <div class="card" style="border-color: #10B981;">
+                <h2>D2.2 - Form & Function ⚙️</h2>
+                <p>Coming soon! This lesson will explore how form matches function.</p>
+                <div style="text-align: center; margin-top: 3rem;">
+                    <button class="back-button bottom-back-button show" onclick="showPage('home', event)">
+                        ← Back to Lessons
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="d23" class="page">
+            <div class="card" style="border-color: #3B82F6;">
+                <h2>D2.3 - Strength 💪</h2>
+                <p>Coming soon! This lesson will teach about structural strength.</p>
+                <div style="text-align: center; margin-top: 3rem;">
+                    <button class="back-button bottom-back-button show" onclick="showPage('home', event)">
+                        ← Back to Lessons
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create starfield
+        const starfield = document.getElementById('starfield');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.width = star.style.height = Math.random() * 3 + 'px';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starfield.appendChild(star);
+        }
+
+        // Create particles
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            const colors = ['#7C3AED', '#EC4899', '#F59E0B', '#10B981', '#3B82F6'];
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.width = particle.style.height = Math.random() * 10 + 5 + 'px';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = Math.random() * 10 + 10 + 's';
+            document.body.appendChild(particle);
+        }
+
+        // Page Navigation
+        function showPage(pageId, event) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(pageId).classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+            
+            const nav = document.querySelector('nav');
+            const backButton = document.getElementById('backButton');
+            const bottomBackButtons = document.querySelectorAll('.bottom-back-button');
+            
+            if (pageId === 'home') {
+                nav.classList.remove('hidden');
+                backButton.classList.remove('show');
+                bottomBackButtons.forEach(btn => btn.classList.remove('show'));
+            } else {
+                nav.classList.add('hidden');
+                backButton.classList.add('show');
+                bottomBackButtons.forEach(btn => btn.classList.add('show'));
+            }
+            
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
